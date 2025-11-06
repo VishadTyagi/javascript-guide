@@ -1,0 +1,147 @@
+.learning-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.learning-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.card-header {
+    padding: 24px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-bottom: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.card-header:hover {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+}
+
+.card-header::after {
+    content: '+';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #667eea;
+    transition: transform 0.3s ease;
+}
+
+.card-header.expanded::after {
+    content: '−';
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.card-content {
+    display: none;
+    padding: 0;
+}
+
+.card-content.expanded {
+    display: block;
+}
+
+.card-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.card-title .icon {
+    margin-right: 12px;
+    color: #667eea;
+    font-size: 1.2em;
+}
+
+.card-description {
+    color: #718096;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.difficulty-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.difficulty-beginner {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.difficulty-intermediate {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.difficulty-advanced {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.example {
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.example:last-child {
+    border-bottom: none;
+}
+
+.example h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.example h3 .icon {
+    margin-right: 8px;
+    color: #667eea;
+}
+
+.note {
+    background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+    border: 1px solid #81e6d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #38b2ac;
+}
+
+.note strong {
+    color: #234e52;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
