@@ -2,32 +2,83 @@
     flex: 1;
     margin-left: 320px;
     padding: 0;
-    background: #f7fafc;
+    background: var(--bg-secondary);
+    margin-top: 0;
+    min-height: calc(100vh - 70px); /* Full height minus navbar */
+    width: calc(100% - 320px); /* Full width minus sidebar */
 }
 
 .content-header {
-    background: white;
-    padding: 30px 40px;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    background: var(--bg-elevated);
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
 }
 
 .content-header h2 {
-    font-size: 2.2em;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 8px;
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-sm);
 }
 
 .content-header p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+}
+
+.search-results-info {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-info-light);
+    border: 1px solid var(--color-info);
+    border-radius: var(--radius-md);
+    color: var(--color-info-dark);
+    font-size: var(--font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+[data-theme="dark"] .search-results-info {
+    background: var(--color-info-light);
+    color: var(--color-info);
+}
+
+.search-results-info i {
+    color: var(--color-info);
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
     color: #718096;
-    font-size: 1.1em;
+}
+
+.no-results i {
+    font-size: 4em;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.no-results h3 {
+    font-size: 1.5em;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.no-results p {
+    color: #718096;
 }
 
 .content {
-    padding: 40px;
-    max-width: 1000px;
+    padding: var(--spacing-2xl);
+    max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .category-title {
@@ -45,18 +96,23 @@
 @media (max-width: 768px) {
     .main-content {
         margin-left: 0;
+        width: 100%;
     }
     
     .content {
-        padding: 20px;
+        padding: var(--spacing-lg);
     }
     
     .content-header {
-        padding: 20px;
+        padding: var(--spacing-lg);
     }
     
     .content-header h2 {
-        font-size: 1.8em;
+        font-size: var(--font-size-2xl);
+    }
+    
+    .category-title {
+        font-size: var(--font-size-2xl);
     }
 }
 

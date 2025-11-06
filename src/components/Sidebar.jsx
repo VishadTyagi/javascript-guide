@@ -1,21 +1,87 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { useApp } from '../contexts/AppContext'
+import { CATEGORIES, DIFFICULTY_LEVELS } from '../constants/categories'
 import './Sidebar.css'
 
-const categories = [
-    { id: 'core-js', name: 'Core JavaScript', icon: 'fa-cog', badge: 12 },
-    { id: 'advanced-js', name: 'Advanced JavaScript', icon: 'fa-rocket', badge: 6 },
-    { id: 'react', name: 'React.js & Frontend', icon: 'fa-react', badge: 6 },
-    { id: 'nodejs', name: 'Node.js Backend', icon: 'fa-node-js', badge: 10 },
-    { id: 'databases', name: 'Databases', icon: 'fa-database', badge: 4 },
-    { id: 'system-design', name: 'System Design', icon: 'fa-sitemap', badge: 4 },
-]
+const Sidebar = React.memo(({ 
+    progress, 
+    searchQuery,
+    setSearchQuery,
+    clearSearch,
+    bookmarks,
+    darkMode,
+    toggleTheme,
+}) => {
+    const { 
+        activeCategory, 
+        setActiveCategory, 
+        sidebarOpen, 
+        learningData,
+        difficultyFilter,
+        setDifficultyFilter,
+    } = useApp()
 
-function Sidebar({ activeCategory, setActiveCategory, progress, sidebarOpen, learningData }) {
+    const bookmarkCount = useMemo(() => bookmarks?.size || 0, [bookmarks])
+
+    const categoryList = useMemo(() => {
+        return CATEGORIES.map(cat => ({
+            ...cat,
+            count: learningData[cat.id]?.cards?.length || 0
+        }))
+    }, [learningData])
+
     return (
         <div className={`sidebar ${sidebarOpen ? 'open' : ''}`} id="sidebar">
             <div className="sidebar-header">
-                <h1><i className="fas fa-code"></i> JS Mastery</h1>
+                <div className="header-top">
+                    <h1><i className="fas fa-code"></i> JS Mastery</h1>
+                    <button 
+                        className="theme-toggle"
+                        onClick={toggleTheme}
+                        title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+                    >
+                        <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`}></i>
+                    </button>
+                </div>
                 <p>Interactive JavaScript Learning Platform</p>
+            </div>
+            
+            <div className="search-section">
+                <div className="search-wrapper">
+                    <i className="fas fa-search search-icon"></i>
+                    <input
+                        id="search-input"
+                        type="text"
+                        className="search-input"
+                        placeholder="Search topics... (Ctrl+K)"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    {searchQuery && (
+                        <button 
+                            className="search-clear"
+                            onClick={clearSearch}
+                            title="Clear search"
+                        >
+                            <i className="fas fa-times"></i>
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            <div className="filter-section">
+                <label className="filter-label">Filter by Difficulty:</label>
+                <select 
+                    className="difficulty-select"
+                    value={difficultyFilter}
+                    onChange={(e) => setDifficultyFilter(e.target.value)}
+                >
+                    {DIFFICULTY_LEVELS.map(level => (
+                        <option key={level.value} value={level.value}>
+                            {level.label}
+                        </option>
+                    ))}
+                </select>
             </div>
             
             <div className="progress-section">
@@ -24,10 +90,15 @@ function Sidebar({ activeCategory, setActiveCategory, progress, sidebarOpen, lea
                     <div className="progress-fill" style={{ width: `${progress}%` }}></div>
                 </div>
                 <div className="progress-text">{progress}% Complete</div>
+                {bookmarkCount > 0 && (
+                    <div className="bookmark-count">
+                        <i className="fas fa-bookmark"></i> {bookmarkCount} Bookmarked
+                    </div>
+                )}
             </div>
             
             <div className="nav-menu">
-                {categories.map(cat => (
+                {categoryList.map(cat => (
                     <div
                         key={cat.id}
                         className={`nav-item ${activeCategory === cat.id ? 'active' : ''}`}
@@ -35,13 +106,14 @@ function Sidebar({ activeCategory, setActiveCategory, progress, sidebarOpen, lea
                     >
                         <i className={`fas ${cat.icon} icon`}></i>
                         {cat.name}
-                        <span className="badge">{learningData[cat.id]?.cards?.length || cat.badge}</span>
+                        <span className="badge">{cat.count}</span>
                     </div>
                 ))}
             </div>
         </div>
     )
-}
+})
+
+Sidebar.displayName = 'Sidebar'
 
 export default Sidebar
-

@@ -1,0 +1,51 @@
+export const ACHIEVEMENTS = [
+    {
+        id: 'first-steps',
+        title: 'First Steps',
+        description: 'Complete your first learning card',
+        icon: 'fa-baby',
+        xp: 10,
+        condition: (stats) => stats.completedCount >= 1,
+    },
+    {
+        id: 'bookworm',
+        title: 'Bookworm',
+        description: 'Bookmark 5 cards',
+        icon: 'fa-book',
+        xp: 25,
+        condition: (stats) => stats.bookmarkedCount >= 5,
+    },
+    {
+        id: 'dedicated-learner',
+        title: 'Dedicated Learner',
+        description: 'Complete 10 cards',
+        icon: 'fa-graduation-cap',
+        xp: 50,
+        condition: (stats) => stats.completedCount >= 10,
+    },
+    {
+        id: 'master-explorer',
+        title: 'Master Explorer',
+        description: 'Complete all cards in a category',
+        icon: 'fa-trophy',
+        xp: 100,
+        condition: (stats) => stats.categoriesCompleted >= 1,
+    },
+    {
+        id: 'streak-starter',
+        title: 'Streak Starter',
+        description: 'Maintain a 3-day learning streak',
+        icon: 'fa-fire',
+        xp: 30,
+        condition: (stats) => stats.streak >= 3,
+    },
+    {
+        id: 'javascript-master',
+        title: 'JavaScript Master',
+        description: 'Complete all learning cards',
+        icon: 'fa-crown',
+        xp: 500,
+        condition: (stats) => stats.completedCount === stats.totalCards,
+    },
+]
+
