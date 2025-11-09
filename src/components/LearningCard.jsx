@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import CodeBlock from './CodeBlock'
 import NoteEditor from './notes/NoteEditor'
-import './LearningCard.css'
-import './notes/Notes.css'
 
 const LearningCard = React.memo(({ 
     card, 
@@ -17,13 +15,9 @@ const LearningCard = React.memo(({
     onDeleteNote,
 }) => {
     const [showNoteEditor, setShowNoteEditor] = useState(false)
-    const difficultyClass = `difficulty-${card.difficulty || 'beginner'}`
 
     const handleCardClick = useCallback((e) => {
-        // Don't toggle if clicking on action buttons
-        if (e.target.closest('.card-actions') || 
-            e.target.closest('.bookmark-btn') || 
-            e.target.closest('.complete-checkbox')) {
+        if (e.target.closest('button') || e.target.closest('label') || e.target.closest('input')) {
             return
         }
         onToggle()
@@ -39,56 +33,95 @@ const LearningCard = React.memo(({
         toggleBookmark()
     }, [toggleBookmark])
 
+    const difficultyStyles = {
+        beginner: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300',
+        intermediate: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
+        advanced: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300',
+    }
+
     return (
-        <div className="learning-card">
+        <article className="bg-white dark:bg-gray-900 rounded-lg sm:rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden card-hover">
+            {/* Card Header */}
             <div 
-                className={`card-header ${isExpanded ? 'expanded' : ''}`}
+                className="p-4 sm:p-6 cursor-pointer"
                 onClick={handleCardClick}
             >
-                <div className="card-title-section">
-                    <div className="card-title">
-                        <i className={`fas ${card.icon} icon`}></i>
-                        {card.title}
+                <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center flex-shrink-0">
+                                <i className={`fas ${card.icon} text-white text-sm`}></i>
+                            </div>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-gray-50 truncate">
+                                {card.title}
+                            </h3>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                            {card.description}
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <span className={`px-2.5 py-1 rounded-md text-xs font-medium ${difficultyStyles[card.difficulty] || difficultyStyles.beginner}`}>
+                                {card.difficulty || 'Beginner'}
+                            </span>
+                        </div>
                     </div>
-                    <div className="card-actions">
-                        <button 
-                            className={`bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`}
+                    
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
                             onClick={handleBookmark}
-                            title={isBookmarked ? 'Remove bookmark' : 'Bookmark this card'}
+                            className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                                isBookmarked
+                                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400'
+                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                            }`}
+                            title={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
                         >
-                            <i className="fas fa-bookmark"></i>
+                            <i className="fas fa-bookmark text-sm"></i>
                         </button>
-                        <label className="complete-checkbox-wrapper">
+                        <label className="cursor-pointer">
                             <input
                                 type="checkbox"
-                                className="complete-checkbox"
                                 checked={isCompleted}
                                 onChange={handleComplete}
-                                onClick={(e) => e.stopPropagation()}
+                                className="sr-only"
                             />
-                            <span className={`checkmark ${isCompleted ? 'checked' : ''}`} title={isCompleted ? 'Mark as incomplete' : 'Mark as completed'}>
-                                {isCompleted && <i className="fas fa-check"></i>}
-                            </span>
+                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all ${
+                                isCompleted
+                                    ? 'bg-brand-500 text-white shadow-soft'
+                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                            }`}>
+                                {isCompleted && <i className="fas fa-check text-sm"></i>}
+                            </div>
                         </label>
                     </div>
                 </div>
-                <div className="card-description">
-                    {card.description}
-                </div>
-                <div className="card-footer">
-                    <div className={`difficulty-badge ${difficultyClass}`}>
-                        {card.difficulty || 'Beginner'}
-                    </div>
+                
+                <div className="mt-4 flex items-center justify-between">
+                    <button className="text-sm font-medium text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 flex items-center gap-2">
+                        {isExpanded ? (
+                            <>
+                                <span>Show less</span>
+                                <i className="fas fa-chevron-up text-xs"></i>
+                            </>
+                        ) : (
+                            <>
+                                <span>Learn more</span>
+                                <i className="fas fa-chevron-down text-xs"></i>
+                            </>
+                        )}
+                    </button>
                 </div>
             </div>
+
+            {/* Expanded Content */}
             {isExpanded && (
-                <div className="card-content expanded">
+                <div className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
                     {card.examples && card.examples.map((example, idx) => (
-                        <div key={idx} className="example">
-                            <h3>
-                                <i className="fas fa-code icon"></i>
+                        <div key={idx} className="p-6 border-b border-gray-200 dark:border-gray-800 last:border-b-0">
+                            <h4 className="text-base font-semibold text-gray-900 dark:text-gray-50 mb-4 flex items-center gap-2">
+                                <i className="fas fa-code text-brand-500"></i>
                                 {example.title}
-                            </h3>
+                            </h4>
                             <CodeBlock 
                                 code={example.code} 
                                 language={example.language || 'javascript'}
@@ -96,33 +129,37 @@ const LearningCard = React.memo(({
                                 outputId={`${card.id}-example-${idx}`}
                             />
                             {example.note && (
-                                <div className="note">
-                                    <strong>Key Point:</strong> {example.note}
+                                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-400 rounded-r-lg">
+                                    <p className="text-sm text-blue-900 dark:text-blue-100">
+                                        <strong>💡 Key Point:</strong> {example.note}
+                                    </p>
                                 </div>
                             )}
                         </div>
                     ))}
                     
                     {/* Notes Section */}
-                    <div className="card-notes-section">
+                    <div className="p-6 border-t border-gray-200 dark:border-gray-800">
                         {note && !showNoteEditor && (
-                            <div className="card-note">
-                                <div className="card-note-header">
-                                    <h4><i className="fas fa-sticky-note"></i> Your Note</h4>
-                                    <button 
-                                        className="note-delete"
+                            <div className="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h5 className="text-sm font-semibold text-amber-900 dark:text-amber-100 flex items-center gap-2">
+                                        <i className="fas fa-sticky-note"></i>
+                                        Your Note
+                                    </h5>
+                                    <button
                                         onClick={() => onDeleteNote(card.id)}
-                                        title="Delete note"
+                                        className="text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300"
                                     >
-                                        <i className="fas fa-trash"></i>
+                                        <i className="fas fa-trash text-xs"></i>
                                     </button>
                                 </div>
-                                <div className="card-note-content">{note}</div>
-                                <button 
-                                    className="note-button"
+                                <p className="text-sm text-amber-800 dark:text-amber-200 whitespace-pre-wrap mb-3">{note}</p>
+                                <button
                                     onClick={() => setShowNoteEditor(true)}
+                                    className="text-xs font-medium text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200"
                                 >
-                                    <i className="fas fa-edit"></i> Edit Note
+                                    Edit note
                                 </button>
                             </div>
                         )}
@@ -137,20 +174,20 @@ const LearningCard = React.memo(({
                         )}
                         
                         {!note && !showNoteEditor && (
-                            <button 
-                                className="note-button"
+                            <button
                                 onClick={() => setShowNoteEditor(true)}
+                                className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors flex items-center justify-center gap-2"
                             >
-                                <i className="fas fa-plus"></i> Add Note
+                                <i className="fas fa-plus text-xs"></i>
+                                Add a note
                             </button>
                         )}
                     </div>
                 </div>
             )}
-        </div>
+        </article>
     )
 }, (prevProps, nextProps) => {
-    // Custom comparison for React.memo
     return (
         prevProps.card.id === nextProps.card.id &&
         prevProps.isExpanded === nextProps.isExpanded &&

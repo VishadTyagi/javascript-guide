@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Quiz.css'
 
 const QuizCard = ({ question, options, correctAnswer, explanation, onAnswer }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -19,41 +18,52 @@ const QuizCard = ({ question, options, correctAnswer, explanation, onAnswer }) =
     const isCorrect = selectedAnswer === correctAnswer
 
     return (
-        <div className="quiz-card">
-            <div className="quiz-question">
-                <h3>{question}</h3>
-            </div>
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">{question}</h3>
             
-            <div className="quiz-options">
+            <div className="space-y-2">
                 {options.map((option, idx) => {
                     const isSelected = selectedAnswer === idx
                     const isCorrectOption = idx === correctAnswer
-                    let optionClass = 'quiz-option'
+                    
+                    let buttonClass = 'w-full flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all '
                     
                     if (showResult) {
                         if (isCorrectOption) {
-                            optionClass += ' correct'
+                            buttonClass += 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-900 dark:text-emerald-100'
                         } else if (isSelected && !isCorrect) {
-                            optionClass += ' incorrect'
+                            buttonClass += 'border-rose-500 bg-rose-50 dark:bg-rose-900/20 text-rose-900 dark:text-rose-100'
+                        } else {
+                            buttonClass += 'border-gray-200 dark:border-gray-800 opacity-50'
                         }
                     } else if (isSelected) {
-                        optionClass += ' selected'
+                        buttonClass += 'border-brand-500 bg-brand-50 dark:bg-brand-900/20'
+                    } else {
+                        buttonClass += 'border-gray-200 dark:border-gray-800 hover:border-brand-300 dark:hover:border-brand-700 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }
 
                     return (
                         <button
                             key={idx}
-                            className={optionClass}
+                            className={buttonClass}
                             onClick={() => handleSelect(idx)}
                             disabled={showResult}
                         >
-                            <span className="option-label">{String.fromCharCode(65 + idx)}</span>
-                            <span className="option-text">{option}</span>
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+                                showResult && isCorrectOption
+                                    ? 'bg-emerald-500 text-white'
+                                    : showResult && isSelected && !isCorrect
+                                    ? 'bg-rose-500 text-white'
+                                    : 'bg-brand-500 text-white'
+                            }`}>
+                                {String.fromCharCode(65 + idx)}
+                            </div>
+                            <span className="flex-1 text-sm">{option}</span>
                             {showResult && isCorrectOption && (
-                                <i className="fas fa-check option-icon"></i>
+                                <i className="fas fa-check text-emerald-600 dark:text-emerald-400"></i>
                             )}
                             {showResult && isSelected && !isCorrect && (
-                                <i className="fas fa-times option-icon"></i>
+                                <i className="fas fa-times text-rose-600 dark:text-rose-400"></i>
                             )}
                         </button>
                     )
@@ -61,26 +71,25 @@ const QuizCard = ({ question, options, correctAnswer, explanation, onAnswer }) =
             </div>
 
             {showResult && (
-                <div className={`quiz-result ${isCorrect ? 'correct' : 'incorrect'}`}>
-                    <div className="result-icon">
-                        {isCorrect ? '✓' : '✗'}
-                    </div>
-                    <div className="result-text">
-                        {isCorrect ? 'Correct!' : 'Incorrect'}
+                <div className={`p-4 rounded-lg border-2 ${
+                    isCorrect
+                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500'
+                        : 'bg-rose-50 dark:bg-rose-900/20 border-rose-500'
+                }`}>
+                    <div className={`text-2xl font-bold mb-2 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                        {isCorrect ? '✓ Correct!' : '✗ Incorrect'}
                     </div>
                     {explanation && (
-                        <div className="result-explanation">
-                            {explanation}
-                        </div>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{explanation}</p>
                     )}
                 </div>
             )}
 
             {!showResult && (
-                <button 
-                    className="quiz-submit"
+                <button
                     onClick={handleSubmit}
                     disabled={selectedAnswer === null}
+                    className="w-full py-3 bg-brand-500 hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
                 >
                     Submit Answer
                 </button>
@@ -90,4 +99,3 @@ const QuizCard = ({ question, options, correctAnswer, explanation, onAnswer }) =
 }
 
 export default QuizCard
-

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import './CodeBlock.css'
 
 const CodeBlock = React.memo(({ code, language = 'javascript', runFunction, outputId }) => {
     const [output, setOutput] = useState('')
@@ -8,13 +7,11 @@ const CodeBlock = React.memo(({ code, language = 'javascript', runFunction, outp
     const codeRef = useRef(null)
 
     useEffect(() => {
-        // Initialize Prism.js syntax highlighting after render
         const timer = setTimeout(() => {
             if (window.Prism && codeRef.current) {
                 window.Prism.highlightElement(codeRef.current)
             }
         }, 0)
-        
         return () => clearTimeout(timer)
     }, [code, language])
 
@@ -25,7 +22,6 @@ const CodeBlock = React.memo(({ code, language = 'javascript', runFunction, outp
             setTimeout(() => setCopySuccess(false), 2000)
         } catch (err) {
             console.error('Failed to copy code:', err)
-            // Fallback for older browsers
             const textArea = document.createElement('textarea')
             textArea.value = code
             document.body.appendChild(textArea)
@@ -54,55 +50,65 @@ const CodeBlock = React.memo(({ code, language = 'javascript', runFunction, outp
     }, [runFunction])
 
     return (
-        <div className="code-block-wrapper">
-            <div className="code-block">
-                <div className="code-header">
-                    <span className="code-lang">{language}</span>
-                    <div className="code-actions">
-                        <button 
-                            className={`code-action ${copySuccess ? 'copied' : ''}`} 
-                            onClick={copyCode}
-                            title="Copy code"
-                        >
-                            {copySuccess ? (
-                                <>
-                                    <i className="fas fa-check"></i> Copied!
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-copy"></i> Copy
-                                </>
-                            )}
-                        </button>
-                    </div>
+        <div className="my-4">
+            <div className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 border-b border-gray-700">
+                    <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        {language}
+                    </span>
+                    <button
+                        onClick={copyCode}
+                        className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
+                            copySuccess
+                                ? 'bg-emerald-600 text-white'
+                                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                        }`}
+                    >
+                        {copySuccess ? (
+                            <><i className="fas fa-check mr-1.5"></i>Copied</>
+                        ) : (
+                            <><i className="fas fa-copy mr-1.5"></i>Copy</>
+                        )}
+                    </button>
                 </div>
-                <div className="code-content">
-                    <pre>
-                        <code 
+                
+                {/* Code */}
+                <div className="p-4 overflow-x-auto">
+                    <pre className="m-0">
+                        <code
                             ref={codeRef}
-                            className={`language-${language}`}
+                            className={`language-${language} text-sm font-mono text-gray-100`}
                         >
                             {code}
                         </code>
                     </pre>
                 </div>
             </div>
+
+            {/* Run Button & Output */}
             {runFunction && (
-                <>
-                    <button className="run-button" onClick={runCode}>
-                        <i className="fas fa-play"></i> Run Example
+                <div className="mt-3">
+                    <button
+                        onClick={runCode}
+                        className="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                    >
+                        <i className="fas fa-play text-xs"></i>
+                        Run Code
                     </button>
                     {showOutput && output && (
-                        <div className="output" id={outputId}>
-                            <pre>{output}</pre>
+                        <div className="mt-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg border-l-4 border-l-brand-500" id={outputId}>
+                            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Output:</div>
+                            <pre className="text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-words m-0">
+                                {output}
+                            </pre>
                         </div>
                     )}
-                </>
+                </div>
             )}
         </div>
     )
 }, (prevProps, nextProps) => {
-    // Custom comparison - only re-render if code or language changes
     return (
         prevProps.code === nextProps.code &&
         prevProps.language === nextProps.language &&
