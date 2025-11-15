@@ -11,6 +11,7 @@ export const advanced_js = {
                 title: '1. Prototype, this, and Object Inheritance',
                 icon: 'fa-cogs',
                 description: 'Master JavaScript\'s prototype-based inheritance system, understand how \`this\` binding works, and learn how objects inherit from other objects. These three concepts work together to enable object-oriented programming in JavaScript.',
+                explanation: 'JavaScript uses prototype-based inheritance, where objects can inherit properties and methods from other objects through the prototype chain. Every object has a prototype, and when you access a property, JavaScript looks up the chain until it finds it. The \`this\` keyword is crucial - it refers to the object that calls a function, and its value is determined by how the function is called. These three concepts work together: prototypes enable inheritance, \`this\` provides context, and together they enable object-oriented patterns. Understanding how prototypes, \`this\` binding, and inheritance interact is fundamental to mastering JavaScript\'s object model and is essential for working with classes, constructors, and advanced JavaScript patterns.',
                 difficulty: 'Advanced',
                 examples: [
                     {

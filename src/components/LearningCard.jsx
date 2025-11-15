@@ -116,6 +116,20 @@ const LearningCard = React.memo(({
             {/* Expanded Content */}
             {isExpanded && (
                 <div className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+                    {/* Explanation Section */}
+                    {card.explanation && (
+                        <div className="p-6 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
+                            <h4 className="text-base font-semibold text-gray-900 dark:text-gray-50 mb-3 flex items-center gap-2">
+                                <i className="fas fa-book-open text-blue-500 dark:text-blue-400"></i>
+                                Explanation
+                            </h4>
+                            <div className="prose prose-sm dark:prose-invert max-w-none">
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                                    {card.explanation}
+                                </p>
+                            </div>
+                        </div>
+                    )}
                     {card.examples && card.examples.map((example, idx) => (
                         <div key={idx} className="p-6 border-b border-gray-200 dark:border-gray-800 last:border-b-0">
                             <h4 className="text-base font-semibold text-gray-900 dark:text-gray-50 mb-4 flex items-center gap-2">

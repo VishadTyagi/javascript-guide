@@ -11,6 +11,7 @@ export const core_js = {
                 title: '1. Variables: var, let, const',
                 icon: 'fa-code',
                 description: 'Understanding the differences between var, let, and const, including scoping, hoisting, and best practices.',
+                explanation: 'Variables in JavaScript are containers for storing data values. JavaScript has three ways to declare variables: var, let, and const. Each has different scoping rules and behaviors. The var keyword is function-scoped and can be redeclared, which can lead to bugs. The let keyword is block-scoped and cannot be redeclared in the same scope, making it safer. The const keyword is also block-scoped but must be initialized and cannot be reassigned, though objects and arrays declared with const can still be mutated. Understanding these differences is crucial for writing maintainable JavaScript code. Modern JavaScript best practices recommend using const by default, let when you need to reassign values, and avoiding var entirely.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -80,6 +81,7 @@ function getValue() {
                 title: '2. Functions',
                 icon: 'fa-function',
                 description: 'Function declarations, expressions, IIFE, parameters, and function methods (call, apply, bind).',
+                explanation: 'Functions are one of the fundamental building blocks in JavaScript. They allow you to encapsulate code that can be reused throughout your program. JavaScript supports several ways to define functions: function declarations (hoisted), function expressions (not hoisted), arrow functions, and immediately invoked function expressions (IIFE). Functions can accept parameters, use default values, rest parameters, and destructured parameters. The methods call(), apply(), and bind() allow you to control the this context of functions, which is essential for object-oriented programming patterns. Understanding function scope, closures, and the different ways to invoke functions is key to mastering JavaScript.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -187,6 +189,7 @@ const min = Math.min.call(null, ...numbers); // 2`,
                 title: '3. Objects & Object Methods',
                 icon: 'fa-cube',
                 description: 'Object creation, manipulation, and built-in Object methods for working with objects.',
+                explanation: 'Objects in JavaScript are collections of key-value pairs and are the fundamental data structure for representing real-world entities. You can create objects using object literals, constructor functions, Object.create(), or ES6 classes. JavaScript provides powerful built-in methods for working with objects: Object.keys() returns all keys, Object.values() returns all values, Object.entries() returns key-value pairs as arrays, and Object.assign() copies properties between objects. Methods like Object.freeze() and Object.seal() provide ways to control object mutability. Understanding object manipulation is essential for working with data structures, APIs, and building complex applications.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -296,6 +299,7 @@ console.log(Object.isSealed(sealed)); // true`,
                 title: '4. Callbacks',
                 icon: 'fa-phone',
                 description: 'Callback functions, callback patterns, and the transition from callbacks to Promises.',
+                explanation: 'A callback is a function passed as an argument to another function that gets executed later. Callbacks are fundamental to JavaScript\'s asynchronous nature and are used extensively in event handling, array methods, and asynchronous operations. While callbacks are powerful, they can lead to "callback hell" when nested deeply, making code hard to read and maintain. The error-first callback pattern is a Node.js convention where the first parameter is an error object. Modern JavaScript has moved toward Promises and async/await to handle asynchronous operations more elegantly, but understanding callbacks is still essential as they form the foundation of these newer patterns and are still widely used in many libraries and APIs.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -411,6 +415,7 @@ readFile('invalid.txt', (error, data) => {
                 title: '5. Closures',
                 icon: 'fa-link',
                 description: 'A closure is a function that has access to variables in its outer (enclosing) scope even after the outer function returns.',
+                explanation: 'Closures are one of JavaScript\'s most powerful and important concepts. A closure is created when a function is defined inside another function and has access to the outer function\'s variables, even after the outer function has finished executing. This happens because the inner function "closes over" the outer function\'s scope, preserving access to those variables. Closures enable powerful programming patterns like data privacy (creating private variables), function factories, and event handlers that maintain state. They are used extensively in modern JavaScript frameworks and are essential for understanding how JavaScript manages scope and memory. Closures are also the mechanism behind many design patterns and are fundamental to how modules work in JavaScript.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -436,6 +441,7 @@ console.log(addFive(10)); // 15`,
                 title: '6. Hoisting',
                 icon: 'fa-arrow-up',
                 description: 'Hoisting is JavaScript\'s behavior of moving variable and function declarations to the top of their scope during compilation.',
+                explanation: 'Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their containing scope during the compilation phase, before code execution. However, only the declarations are hoisted, not the initializations. This means you can use variables and functions before they appear in your code, but with important caveats. Function declarations are fully hoisted (you can call them before they\'re defined), while var variables are hoisted but initialized with undefined. let and const are hoisted but remain in the "Temporal Dead Zone" until their declaration line is reached, causing a ReferenceError if accessed before. Understanding hoisting helps explain many JavaScript behaviors and prevents common bugs related to variable access and function calls.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -475,6 +481,7 @@ var sayHello = function() {
                 title: '7. Scope',
                 icon: 'fa-eye',
                 description: 'Scope determines the accessibility of variables, functions, and objects in different parts of your code.',
+                explanation: 'Scope in JavaScript determines where variables, functions, and objects are accessible in your code. There are three main types of scope: global scope (accessible everywhere), function scope (accessible within a function), and block scope (accessible within a block like if statements or loops). JavaScript uses lexical scoping, meaning the scope is determined by where variables and functions are declared in the source code, not where they are called. The scope chain allows inner functions to access variables from outer scopes, but not vice versa. Understanding scope is crucial for avoiding variable naming conflicts, understanding closures, and writing maintainable code. The introduction of let and const in ES6 brought proper block scoping to JavaScript, which helps prevent many common bugs.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -555,6 +562,7 @@ console.log(counter.getCount());  // 2
                 title: '8. Event Loop',
                 icon: 'fa-sync',
                 description: 'The event loop is what allows JavaScript to be non-blocking and asynchronous by offloading operations to the system kernel.',
+                explanation: 'The event loop is the mechanism that allows JavaScript to perform non-blocking asynchronous operations despite being single-threaded. It continuously monitors the call stack and the callback queue, moving functions from the queue to the stack when the stack is empty. The event loop has different phases: it processes microtasks (like Promises) before macrotasks (like setTimeout). This priority system means Promise callbacks execute before setTimeout callbacks, even if both are scheduled. Understanding the event loop is crucial for writing efficient asynchronous code, debugging timing issues, and understanding why certain code executes in a particular order. It\'s the foundation of how JavaScript handles concurrency and is essential knowledge for any serious JavaScript developer.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -600,6 +608,7 @@ console.log("End");`,
                 title: '9. Promises',
                 icon: 'fa-handshake',
                 description: 'A Promise is an object representing the eventual completion or failure of an asynchronous operation.',
+                explanation: 'Promises are objects that represent the eventual result of an asynchronous operation. They provide a cleaner alternative to callbacks for handling asynchronous code. A Promise can be in one of three states: pending (initial state), fulfilled (operation completed successfully), or rejected (operation failed). Promises are chainable using .then() for success cases and .catch() for error handling, which helps avoid callback hell. They also support .finally() for cleanup operations that run regardless of success or failure. Promises can be combined using Promise.all() for parallel execution or Promise.race() for the first to complete. Understanding Promises is essential for modern JavaScript development, as they form the foundation for async/await and are used extensively in APIs, fetch requests, and asynchronous operations.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -636,6 +645,7 @@ fetchUser(1)
                 title: '10. Async/Await',
                 icon: 'fa-clock',
                 description: 'Async/await is syntactic sugar over Promises, making asynchronous code look and behave more like synchronous code.',
+                explanation: 'Async/await is a modern JavaScript feature that provides a more readable and intuitive way to work with Promises. The async keyword makes a function return a Promise, while await pauses the execution of the async function until the Promise resolves. This makes asynchronous code look and read like synchronous code, eliminating the need for .then() chains and making error handling more straightforward with try/catch blocks. Async/await is built on top of Promises and doesn\'t replace them, but rather provides a cleaner syntax. It\'s particularly useful for sequential asynchronous operations and makes code easier to debug. However, it\'s important to remember that await only works inside async functions and that multiple await calls in sequence will wait for each to complete, which may not always be the desired behavior.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -670,6 +680,7 @@ fetchUserData(1)
                 title: '11. Arrow Functions',
                 icon: 'fa-arrow-right',
                 description: 'Arrow functions provide a concise syntax for writing functions and handle `this` binding differently.',
+                explanation: 'Arrow functions, introduced in ES6, provide a more concise syntax for writing functions. They use the => syntax and can have implicit returns for single expressions. However, the most important difference is how they handle the this keyword: arrow functions don\'t have their own this binding. Instead, they inherit this from the enclosing lexical scope. This makes them particularly useful for callbacks and event handlers where you want to preserve the this context. Arrow functions also cannot be used as constructors and don\'t have their own arguments object. They\'re great for short, simple functions and are widely used in modern JavaScript, especially with array methods like map, filter, and reduce.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -744,6 +755,7 @@ function Person(name) {
                 title: '12. Destructuring & Spread Operator',
                 icon: 'fa-brackets-curly',
                 description: 'ES6 features for extracting values from arrays/objects and spreading values.',
+                explanation: 'Destructuring is a convenient way to extract values from arrays or properties from objects into distinct variables. It allows you to unpack values in a single statement, making code more readable and concise. Array destructuring uses square brackets and allows you to skip elements, use default values, and collect remaining items with the rest operator. Object destructuring uses curly braces and allows renaming variables, default values, and nested destructuring. The spread operator (...) is the opposite of destructuring - it allows you to expand arrays or objects into individual elements. It\'s useful for copying arrays/objects, combining them, passing multiple arguments to functions, and collecting function arguments. Together, destructuring and spread are essential modern JavaScript features that make code more elegant and maintainable.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -842,6 +854,7 @@ multiply(2, 1, 2, 3); // [2, 4, 6]`,
                 title: '13. Array Methods',
                 icon: 'fa-list',
                 description: 'Essential array methods: map, filter, reduce, and more for data transformation.',
+                explanation: 'JavaScript provides powerful built-in array methods that enable functional programming patterns. The most commonly used are map() (transforms each element), filter() (selects elements that pass a test), and reduce() (reduces array to a single value). These methods don\'t mutate the original array, making them safe for functional programming. Other important methods include find() and findIndex() for locating elements, some() and every() for testing conditions, forEach() for iteration, and includes() for membership checks. These methods can be chained together to create powerful data transformations. Understanding array methods is fundamental to modern JavaScript development, as they provide a declarative way to work with data that\'s more readable and less error-prone than traditional loops.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -911,6 +924,7 @@ users.forEach(user => console.log(user.name));`,
                 title: '14. Type Coercion & Equality',
                 icon: 'fa-equals',
                 description: 'Understanding JavaScript\'s type coercion, truthy/falsy values, and equality operators.',
+                explanation: 'Type coercion is JavaScript\'s automatic conversion of values from one type to another. This happens when operators expect certain types or when values are used in boolean contexts. JavaScript has two equality operators: == (loose equality, performs type coercion) and === (strict equality, no coercion). Understanding truthy and falsy values is crucial - falsy values include false, 0, "", null, undefined, and NaN, while everything else is truthy. Type coercion can be implicit (automatic) or explicit (using functions like Number(), String(), Boolean()). While coercion can be convenient, it can also lead to unexpected bugs, which is why most developers prefer === over ==. Understanding these concepts helps prevent common JavaScript pitfalls and makes code more predictable.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -1002,6 +1016,7 @@ console.log(Number(true) + 1);      // 2`,
                 title: '15. Error Handling',
                 icon: 'fa-exclamation-circle',
                 description: 'Using try/catch/finally blocks and handling errors properly in JavaScript.',
+                explanation: 'Error handling is crucial for building robust JavaScript applications. The try/catch/finally statement allows you to handle errors gracefully. Code in the try block is executed, and if an error occurs, execution jumps to the catch block. The finally block always executes, making it perfect for cleanup operations. You can throw custom errors using the throw statement and create custom error types by extending the Error class. In asynchronous code, errors in Promises are caught with .catch(), and in async/await, you use try/catch. Proper error handling involves logging errors, providing user-friendly messages, and preventing application crashes. It\'s important to handle errors at the appropriate level and not silently swallow them, as this makes debugging difficult.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -1109,6 +1124,7 @@ async function fetchData() {
                 title: '16. Modern JavaScript Features',
                 icon: 'fa-star',
                 description: 'Optional chaining, nullish coalescing, and other modern ES6+ features.',
+                explanation: 'Modern JavaScript (ES6+) introduces many features that make code more concise and safer. Optional chaining (?.) allows safe access to nested object properties without throwing errors if a property is null or undefined. Nullish coalescing (??) provides a default value only when the left side is null or undefined, unlike || which uses any falsy value. Template literals (backticks) enable string interpolation and multi-line strings. These features work together to make JavaScript code more readable and less error-prone. Understanding these modern features is essential for writing contemporary JavaScript code and taking advantage of the language\'s evolution.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -1210,6 +1226,7 @@ const result = highlight\`Hello, \${name}!\`;`,
                 title: '17. Shallow Copy & Deep Copy',
                 icon: 'fa-copy',
                 description: 'Understanding the difference between shallow and deep copying of objects and arrays in JavaScript.',
+                explanation: 'Copying objects and arrays in JavaScript requires understanding the difference between shallow and deep copies. A shallow copy creates a new object/array but only copies the top-level properties. Nested objects and arrays are still referenced, meaning changes to nested properties affect both the original and copy. A deep copy creates a completely independent copy at all levels. Common shallow copy methods include the spread operator (...), Object.assign(), and Array.slice(). For deep copies, you can use JSON.parse(JSON.stringify()) (with limitations), the modern structuredClone() method, or custom recursive functions. Understanding when to use each type of copy is crucial for preventing bugs, especially when working with state management in frameworks like React, where immutability is important.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1352,6 +1369,7 @@ const newState = {
                 title: '18. ES6 Classes',
                 icon: 'fa-graduation-cap',
                 description: 'Modern class syntax for object-oriented programming in JavaScript.',
+                explanation: 'ES6 classes provide a cleaner, more intuitive syntax for creating objects and implementing inheritance in JavaScript. Under the hood, classes are syntactic sugar over JavaScript\'s prototype-based inheritance. Classes support constructors, instance methods, static methods, getters, setters, and inheritance through the extends keyword. The super keyword is used to call parent class constructors and methods. ES2022 introduced private fields and methods using the # syntax, providing true encapsulation. Classes make object-oriented programming in JavaScript more accessible and familiar to developers coming from class-based languages. However, it\'s important to understand that classes still use prototypes and this binding, so understanding the underlying mechanisms is valuable.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1498,6 +1516,7 @@ account.deposit(50);
                 title: '19. ES6 Modules',
                 icon: 'fa-box',
                 description: 'Import and export syntax for modular JavaScript code organization.',
+                explanation: 'ES6 modules provide a standardized way to organize and share code in JavaScript. Modules allow you to split code into separate files, each with its own scope, and import/export only what\'s needed. Named exports allow multiple exports from a module, while default exports provide a single main export. Modules are automatically in strict mode and have their own scope, preventing global namespace pollution. They support static analysis, enabling tree-shaking (removing unused code) and better optimization by bundlers. Dynamic imports allow lazy loading of modules, which is useful for code splitting and performance optimization. Understanding modules is essential for modern JavaScript development, as they\'re the standard way to organize code in frameworks like React, Vue, and Node.js applications.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1578,6 +1597,7 @@ if (condition) {
                 title: '20. Set and Map',
                 icon: 'fa-database',
                 description: 'Modern data structures: Set for unique values, Map for key-value pairs.',
+                explanation: 'Set and Map are ES6 data structures that provide alternatives to arrays and objects for specific use cases. Set stores unique values of any type and is useful for removing duplicates, tracking unique items, and membership testing. Map stores key-value pairs where keys can be any type (not just strings like objects), maintains insertion order, and has a size property. Maps are better than objects when you need keys of different types, guaranteed order, or frequent additions/deletions. WeakSet and WeakMap are variants that use weak references, allowing garbage collection when objects are no longer referenced. Understanding when to use Set/Map versus arrays/objects helps write more efficient and appropriate code for different scenarios.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1695,6 +1715,7 @@ class Person {
                 title: '21. Regular Expressions',
                 icon: 'fa-search',
                 description: 'Pattern matching with regular expressions for string manipulation and validation.',
+                explanation: 'Regular expressions (regex) are powerful patterns used to match, search, and manipulate text. They provide a concise way to describe string patterns, making them invaluable for validation, parsing, and text processing. Regex patterns use special characters and syntax to define matching rules. Common use cases include email validation, phone number formatting, extracting data from strings, and search/replace operations. JavaScript provides regex support through the RegExp object and methods like test(), exec(), match(), search(), replace(), and split(). While regex can be complex, understanding the basics enables you to handle many common text processing tasks efficiently. However, for very complex patterns, it\'s often better to use parsing libraries or break the problem into simpler steps.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1771,6 +1792,7 @@ console.log(clean); // "Hello World"`,
                 title: '22. JSON',
                 icon: 'fa-file-code',
                 description: 'Working with JSON data format: stringify, parse, and common patterns.',
+                explanation: 'JSON (JavaScript Object Notation) is a lightweight data interchange format that\'s become the standard for data exchange on the web. It\'s based on JavaScript object syntax but is language-independent. JSON.stringify() converts JavaScript objects/arrays to JSON strings, while JSON.parse() converts JSON strings back to JavaScript objects. JSON has limitations: it doesn\'t support functions, undefined, symbols, or circular references. Dates become strings, and NaN/Infinity become null. Understanding these limitations is important when working with APIs and data serialization. JSON is used extensively in REST APIs, configuration files, and data storage. Knowing how to properly stringify and parse JSON, handle errors, and work around its limitations is essential for modern web development.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -1865,6 +1887,7 @@ b.ref = a;
                 title: '23. Iterators and Iterables',
                 icon: 'fa-repeat',
                 description: 'Understanding iterables, iterators, and the for...of loop.',
+                explanation: 'Iterators and iterables are protocols that allow JavaScript objects to define their iteration behavior. An iterable is an object that implements the Symbol.iterator method, which returns an iterator. An iterator is an object with a next() method that returns {value, done}. Built-in iterables include arrays, strings, Maps, Sets, and the arguments object. The for...of loop works with any iterable, providing a clean way to iterate over values. You can create custom iterables by implementing Symbol.iterator, and generator functions provide a simpler way to create iterators. Understanding iterators is important for working with modern JavaScript features, creating custom data structures, and understanding how iteration works under the hood.',
                 difficulty: 'Intermediate',
                 examples: [
                     {
@@ -1952,6 +1975,7 @@ console.log(numbers); // [1, 2, 3, 4, 5]`,
                 title: '24. Rest Parameters',
                 icon: 'fa-ellipsis-h',
                 description: 'Rest parameters for handling variable number of function arguments.',
+                explanation: 'Rest parameters allow functions to accept an indefinite number of arguments as an array. They use the ... syntax and must be the last parameter in a function. Rest parameters collect all remaining arguments into an array, making it easy to work with variable-length argument lists. This is more flexible than the old arguments object, which was array-like but not a real array. Rest parameters are the opposite of the spread operator: rest collects arguments into an array, while spread expands an array into arguments. They\'re commonly used for functions that need to handle flexible numbers of inputs, combining arrays, and creating more versatile utility functions. Understanding rest parameters is essential for writing modern, flexible JavaScript functions.',
                 difficulty: 'Beginner',
                 examples: [
                     {
@@ -2033,6 +2057,7 @@ max(5, 10, 3, 8); // 10`,
                 title: '25. Strict Mode',
                 icon: 'fa-shield-alt',
                 description: 'Using strict mode for safer JavaScript code and best practices.',
+                explanation: 'Strict mode is a way to opt into a restricted variant of JavaScript that helps catch common mistakes and prevents certain actions. It\'s enabled by adding "use strict" at the top of a file or function. Strict mode makes several changes: it prevents accidental global variables, makes assignments to non-writable properties throw errors, requires unique parameter names, makes this undefined in functions (instead of the global object), and disallows certain syntax like octal literals and the with statement. Modern JavaScript environments (ES6 modules, classes) automatically use strict mode. Using strict mode is considered a best practice as it helps write safer code, catches errors early, and prevents common pitfalls. It\'s especially important in larger codebases where mistakes can be harder to catch.',
                 difficulty: 'Beginner',
                 examples: [
                     {
